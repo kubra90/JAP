@@ -9,8 +9,11 @@ import java.math.BigDecimal;
 
 // TODO: Add annotations
 
+@Entity
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long productId;
     private BigDecimal price;
     private String productName;
