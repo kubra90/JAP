@@ -1,5 +1,6 @@
 package com.example.hibexample.controller;
 
+import com.example.hibexample.data.ProductRepository;
 import com.example.hibexample.model.Product;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,7 +11,8 @@ public class AppController {
 
     //TODO: Inject repositories
 
-
+    private ProductRepository prodRepo;
+    
 
 
     @GetMapping("/products")
