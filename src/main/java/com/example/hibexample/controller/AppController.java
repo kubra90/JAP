@@ -41,14 +41,14 @@ public class AppController {
     public List<Product> findProducts(@RequestParam String q) {
 
         //TODO: Call the right repository method
-        return null;
+        return prodRepo.findByProductName(q);
     }
 
     @GetMapping("/product-fuzzy")
     public List<Product> fuzzySearch(@RequestParam String q) {
 
         //TODO: Call the right repository method
-        return null;
+        return prodRepo.findByProductNameContaining(q);
     }
 
     /*
@@ -83,8 +83,23 @@ public class AppController {
     public Product addProduct(@RequestBody Product product) {
         //TODO: Call the right repository method
 
-        return null;
+        return prodRepo.save(product);
     }
+
+    //remove Product
+    @DeleteMapping("/remove/{id}")
+    public void removeProduct( @PathVariable long id){
+        Optional<Product> prod = prodRepo.findById(id);
+        if(prod.isPresent()){
+            prodRepo.delete(prod.get());
+        }
+    }
+
+//    other way of delete mapping, if you provide only product id, it deletes all row related with the object.
+//    @PostMapping("/remove")
+//    public void removeProduct(@RequestBody Product product){
+//        prodRepo.delete(product);
+//    }
 
     @PostMapping("associate/{projId}/{empId}")
     public void associate(@PathVariable long projId, @PathVariable long empId) {
