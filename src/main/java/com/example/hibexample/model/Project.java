@@ -1,10 +1,9 @@
 package com.example.hibexample.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Project {
 
     @Id
@@ -13,8 +12,17 @@ public class Project {
 
     private String projectName;
 
-    private List<Employee> employees;
 
+
+
+    @ManyToMany(targetEntity = Employee.class, cascade = {CascadeType.ALL})
+    @JoinTable(
+            name= "employee_project",
+            joinColumns = {@JoinColumn(name="project_id")},
+            inverseJoinColumns = {@JoinColumn(name="employee_id")}
+    )
+
+    private List<Employee> employees;
     public List<Employee> getEmployees() {
         return employees;
     }

@@ -1,7 +1,11 @@
 package com.example.hibexample.controller;
 
+import com.example.hibexample.data.EmployeeRepository;
 import com.example.hibexample.data.ProductRepository;
+import com.example.hibexample.data.ProjectRepository;
+import com.example.hibexample.model.Employee;
 import com.example.hibexample.model.Product;
+import com.example.hibexample.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,6 +19,11 @@ public class AppController {
 
     @Autowired
     private ProductRepository prodRepo;
+
+    @Autowired
+    private ProjectRepository projRepo;
+    @Autowired
+    private EmployeeRepository empRepo;
 
 
 
@@ -105,6 +114,27 @@ public class AppController {
     public void associate(@PathVariable long projId, @PathVariable long empId) {
 
         //TODO: Call the right repository method
+       Optional<Employee> empOpt = empRepo.findById(empId);
+       Optional<Project> projOpt = projRepo.findById(projId);
+       Employee employee = null;
+       Project project = null;
+
+       if(empOpt.isPresent()){
+           employee = empOpt.get();
+       }
+
+       if(projOpt.isPresent()){
+           project = projOpt.get();
+       }
+
+       List<Employee> employees = null;
+       if(empOpt.isPresent() && projOpt.isPresent()){
+           employees = project.getEmployees();
+           employees.add(employee);
+
+           projRepo.save(project);
+
+       }
 
     }
 }
